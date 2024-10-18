@@ -1,27 +1,39 @@
-name: Autograding Tests
-'on':
-- push 2
-- repository_dispatch
-permissions:
-  checks: write
-  actions: read
-  contents: read
-jobs:
-  run-autograding-tests:
-    runs-on: ubuntu-latest
-    if: github.actor != 'github-classroom[bot]'
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: pt2
-      id: pt2
-      uses: classroom-resources/autograding-python-grader@v1
-      with:
-        timeout: 10
-        setup-command: ''
-    - name: Autograding Reporter
-      uses: classroom-resources/autograding-grading-reporter@v1
-      env:
-        PT2_RESULTS: "${{steps.pt2.outputs.result}}"
-      with:
-        runners: pt2
+def decrypt(email):
+    """
+    Decrypts the given email by shifting alphanumeric characters down by 3.
+    
+    Args:
+        email (str): The input email string to be decrypted.
+
+    Returns:
+        str: The decrypted email string, or an error message if validation fails.
+    """
+    
+    # Input validation
+    if len(email) != 6:
+        return "Error: Length must be exactly 6."
+    
+    if not email.isalnum():
+        return "Error: Email must be alphanumeric."
+    
+    # Process the string into a list
+    char_list = list(email)
+
+    # Shift each character down by 3
+    for i in range(len(char_list)):
+        if char_list[i].isalnum():
+            char_list[i] = chr(ord(char_list[i]) - 3)
+    
+    # Convert list back into a string
+    retVal = ''.join(char_list)
+    
+    return retVal
+def test_decrypt():
+    """
+    Tests the decrypt function for various email inputs.
+    """
+    assert decrypt("def345") == "abc012"
+    assert decrypt("aef345") == "Error: Length must be exactly 6."
+    assert decrypt("def4%6") == "Error: Email must be alphanumeric."
+    assert decrypt(" ") == "Error: Length must be exactly 6."
+  
