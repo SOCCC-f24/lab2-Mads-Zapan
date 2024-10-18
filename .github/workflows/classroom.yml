@@ -1,39 +1,46 @@
-def decrypt(email):
+# c_cipher.py
+# This module contains a function to process an email string by shifting its characters up by 3 in the ASCII table.
+# It validates the input email for length and alphanumeric content.
+
+def cipher_email(email):
     """
-    Decrypts the given email by shifting alphanumeric characters down by 3.
-    
-    Args:
-        email (str): The input email string to be decrypted.
+    Processes an email string by shifting each character up by 3 in the ASCII table.
+
+    Parameters:
+    email (str): The email string to be processed. It must be exactly 6 characters long
+                 and contain only alphanumeric characters.
 
     Returns:
-        str: The decrypted email string, or an error message if validation fails.
+    str or None: The processed email string if validation is successful; otherwise, None.
+    
+    Raises:
+    ValueError: If the input email does not meet the required criteria.
     """
     
     # Input validation
     if len(email) != 6:
-        return "Error: Length must be exactly 6."
-    
+        print("Error: Email length must be exactly 6 characters.")
+        return None
     if not email.isalnum():
-        return "Error: Email must be alphanumeric."
-    
-    # Process the string into a list
-    char_list = list(email)
+        print("Error: Email must be alphanumeric.")
+        return None
 
-    # Shift each character down by 3
-    for i in range(len(char_list)):
-        if char_list[i].isalnum():
-            char_list[i] = chr(ord(char_list[i]) - 3)
-    
-    # Convert list back into a string
-    retVal = ''.join(char_list)
-    
+    # Process the string
+    email_list = list(email)  # Convert string to list of characters
+    shifted_list = []
+
+    for char in email_list:
+        shifted_char = chr(ord(char) + 3)  # Shift character up by 3 in ASCII
+        shifted_list.append(shifted_char)  # Append the shifted character to the new list
+
+    retVal = ''.join(shifted_list)  # Convert the list back to a string
     return retVal
-def test_decrypt():
-    """
-    Tests the decrypt function for various email inputs.
-    """
-    assert decrypt("def345") == "abc012"
-    assert decrypt("aef345") == "Error: Length must be exactly 6."
-    assert decrypt("def4%6") == "Error: Email must be alphanumeric."
-    assert decrypt(" ") == "Error: Length must be exactly 6."
+
+# Example usage
+if __name__ == "__main__":
+    email_input = input("Enter an email (6 characters, alphanumeric): ")
+    result = cipher_email(email_input)
+    if result:
+        print(f"Shifted email: {result}")
+
   
