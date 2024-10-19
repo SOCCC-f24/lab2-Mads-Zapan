@@ -3,20 +3,6 @@
 # It validates the input email for length and alphanumeric content.
 
 def cipher_email(email):
-    """
-    Processes an email string by shifting each character up by 3 in the ASCII table.
-
-    Parameters:
-    email (str): The email string to be processed. It must be exactly 6 characters long
-                 and contain only alphanumeric characters.
-
-    Returns:
-    str or None: The processed email string if validation is successful; otherwise, None.
-    
-    Raises:
-    ValueError: If the input email does not meet the required criteria.
-    """
-    
     # Input validation
     if len(email) != 6:
         print("Error: Email length must be exactly 6 characters.")
