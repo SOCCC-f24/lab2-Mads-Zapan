@@ -1,32 +1,66 @@
 # c_cipher.py
-# This module contains a function to process an email string by shifting its characters up by 3 in the ASCII table.
-# It validates the input email for length and alphanumeric content.
+# This module contains functions for encrypting and decrypting alphanumeric strings.
 
-def cipher_email(email):
+def encrypt(email):
+    """
+    Encrypts a given alphanumeric email by shifting each character's ASCII value up by 3.
+    
+    Args:
+        email (str): The email string to be encrypted. Must be exactly 6 characters long and alphanumeric.
+
+    Returns:
+        str or None: The encrypted email if valid, otherwise None with an error message.
+    """
     # Input validation
     if len(email) != 6:
         print("Error: Email length must be exactly 6 characters.")
         return None
+    
     if not email.isalnum():
         print("Error: Email must be alphanumeric.")
         return None
-
+    
     # Process the string
-    email_list = list(email)  # Convert string to list of characters
-    shifted_list = []
+    char_list = list(email)
+    for i in range(len(char_list)):
+        char_list[i] = chr(ord(char_list[i]) + 3)
+    
+    return ''.join(char_list)
 
-    for char in email_list:
-        shifted_char = chr(ord(char) + 3)  # Shift character up by 3 in ASCII
-        shifted_list.append(shifted_char)  # Append the shifted character to the new list
 
-    retVal = ''.join(shifted_list)  # Convert the list back to a string
-    return retVal
+def decrypt(email):
+    """
+    Decrypts a given alphanumeric email by shifting each character's ASCII value down by 3.
+    
+    Args:
+        email (str): The email string to be decrypted. Must be exactly 6 characters long and alphanumeric.
+
+    Returns:
+        str or None: The decrypted email if valid, otherwise None with an error message.
+    """
+    # Input validation
+    if len(email) != 6:
+        print("Error: Email length must be exactly 6 characters.")
+        return None
+    
+    if not email.isalnum():
+        print("Error: Email must be alphanumeric.")
+        return None
+    
+    # Process the string
+    char_list = list(email)
+    for i in range(len(char_list)):
+        char_list[i] = chr(ord(char_list[i]) - 3)
+    
+    return ''.join(char_list)
 
 # Example usage
 if __name__ == "__main__":
-    email_input = input("Enter an email (6 characters, alphanumeric): ")
-    result = cipher_email(email_input)
-    if result:
-        print(f"Shifted email: {result}")
+    email_input = input("Enter the email to encrypt (6 characters): ")
+    encrypted = encrypt(email_input)
+    if encrypted:
+        print(f"Encrypted email: {encrypted}")
+        decrypted = decrypt(encrypted)
+        print(f"Decrypted email: {decrypted}")
 
   
